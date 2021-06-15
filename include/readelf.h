@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdel.c                                        :+:      :+:    :+:   */
+/*   readelf.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/13 20:45:40 by ciglesia          #+#    #+#             */
-/*   Updated: 2019/08/13 20:45:41 by ciglesia         ###   ########.fr       */
+/*   Created: 2021/06/14 13:36:07 by ciglesia          #+#    #+#             */
+/*   Updated: 2021/06/15 18:45:48 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef READELF_H
+# define READELF_H
 
-void	ft_lstdel(t_list **alst, void (*del)(void *, size_t))
-{
-	t_list *temp;
+# include "libelf.h"
+# include "libstd.h"
+# include "libstring.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <linux/elf.h>
+# include <fcntl.h>
 
-	if (*alst)
-	{
-		temp = *alst;
-		while (*alst)
-		{
-			temp = *alst;
-			*alst = temp->next;
-			ft_lstdelone(&temp, del);
-		}
-	}
-}
+/*
+**	Display
+*/
+
+void		print_header(t_elf elf);
+
+#endif

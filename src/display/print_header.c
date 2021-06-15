@@ -6,11 +6,11 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 23:08:24 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/13 23:53:12 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/06/15 18:45:10 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nm.h"
+#include "readelf.h"
 
 static void	print_64header(Elf64_Ehdr elf_64, char **type)
 {
@@ -64,7 +64,7 @@ static void	print_32header(Elf32_Ehdr elf_32, char **type)
 	ft_printf("  Section header string table index: %d\n", elf_32.e_shstrndx);
 }
 
-static void	print_magic(t_elf *elf, char **arch, char **endian, char **osabi)
+static void	print_magic(t_elf elf, char **arch, char **endian, char **osabi)
 {
 	int		i;
 
@@ -72,15 +72,15 @@ static void	print_magic(t_elf *elf, char **arch, char **endian, char **osabi)
 	ft_printf("  Magic:   "GREEN);
 	i = 0;
 	while (i < EI_NIDENT)
-		ft_printf("%.2x ", elf->identifier[i++]);
+		ft_printf("%.2x ", elf.identifier[i++]);
 	ft_printf(E0M"\n  Class:                             ");
-	ft_printf("%s\n", arch[elf->identifier[EI_CLASS]]);
+	ft_printf("%s\n", arch[elf.identifier[EI_CLASS]]);
 	ft_printf("  Data:                              ");
-	ft_printf("2's complement, %s endian\n", endian[elf->identifier[EI_DATA]]);
+	ft_printf("2's complement, %s endian\n", endian[elf.identifier[EI_DATA]]);
 	ft_printf("  Version:                           1 (current)\n");
 	ft_printf("  OS/ABI:                            ");
-	ft_printf("%s\n", osabi[elf->identifier[EI_OSABI]]);
-	ft_printf("  ABI Version:                       %d\n", elf->identifier[8]);
+	ft_printf("%s\n", osabi[elf.identifier[EI_OSABI]]);
+	ft_printf("  ABI Version:                       %d\n", elf.identifier[8]);
 }
 
 /*
@@ -116,7 +116,7 @@ static void	print_magic(t_elf *elf, char **arch, char **endian, char **osabi)
 **	0x12 	Stratus Technologies OpenVOS
 */
 
-void	print_header(t_elf *elf)
+void	print_header(t_elf elf)
 {
 	char	*arch[3] = {NULL, "ELF32", "ELF64"};
 	char	*endian[3] = {NULL, "little", "big"};
@@ -130,8 +130,8 @@ void	print_header(t_elf *elf)
 						"CORE (Core file)"};
 
 	print_magic(elf, arch, endian, osabi);
-	if (elf->class == ELFCLASS64)
-		print_64header(elf->elf_64, type);
-	else if (elf->class == ELFCLASS32)
-		print_32header(elf->elf_32, type);
+	if (elf.class == ELFCLASS64)
+		print_64header(elf.elf_64, type);
+	else if (elf.class == ELFCLASS32)
+		print_32header(elf.elf_32, type);
 }

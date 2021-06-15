@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/20 17:00:07 by ciglesia          #+#    #+#              #
-#    Updated: 2021/06/14 12:45:50 by ciglesia         ###   ########.fr        #
+#    Updated: 2021/06/15 15:08:45 by ciglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -16,15 +16,17 @@ NAME		=	ft_readelf
 # General
 INC			=	./include/
 
-# Libft
-SUB_MAKE	=	./lib/libft/
-INCFT		=	./lib/libft/include/
+# Lib
+LIB			=	./lib/
+LIBSTD		=	$(LIB)/libstd/
+LIBSTR		=	$(LIB)/libstring/
+LIBELF		=	$(LIB)/libELF/
 
-INCLUDE		=	-O3 -I $(INCFT) -I $(INC)
+INC_LIB		=	-L$(LIBELF) -lelf -L$(LIBSTD) -lstd -L$(LIBSTR) -lstring
 
-INC_LIB		=	-L$(SUB_MAKE) -lft
+INCLUDE		=	-O3 -I $(INC)
 
-#***************** SRC* *******************#
+#***************** SRC ********************#
 
 DIRSRC		=	./src/
 DIRDIS		=	$(DIRSRC)/display/
@@ -67,11 +69,11 @@ E0M			=	 "\e[0m"
 #************************ DEPS COMPILATION *************************
 
 %.o		:		../$(DIRSRC)/%.c
-				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@printf $(GREEN)"Generating readelf objects... %-33.33s\r" $@
 				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 %.o		:		../$(DIRDIS)/%.c
-				@printf $(GREEN)"Generating minishell objects... %-33.33s\r" $@
+				@printf $(GREEN)"Generating readelf objects... %-33.33s\r" $@
 				@$(CC) $(CFLAGS) $(INCLUDE) -MMD -o $@ -c $<
 
 #************************ MAIN COMPILATION *************************
@@ -91,25 +93,25 @@ $(NAME)	:		ftlib $(OBJS)
 				@$(ECHO) "                                                    d8'"
 				@$(ECHO) "                                                   d8'"
 				@$(ECHO) $(E0M)
-				@$(ECHO) $(BOLD)$(GREEN)'> Compiled'$(E0M)
+				@$(ECHO) $(BOLD) $(GREEN)'> Compiled' $(E0M)
 
 clean	:
 				@($(RM) $(OBJS))
 				@($(RM) $(DEPS))
-				@(cd $(SUB_MAKE) && $(MAKE) clean)
-				@$(ECHO) $(RED)'> Directory cleaned'$(E0M)
+				@(cd $(LIB) && $(MAKE) clean)
+				@$(ECHO) $(RED) '> Directory cleaned' $(E0M)
 
 all		:		$(NAME)
 
 fclean	:		clean
 				@$(RM) $(NAME)
-				@(cd $(SUB_MAKE) && $(MAKE) fclean)
-				@$(ECHO) $(RED)'> Executable removed'$(E0M)
+				@(cd $(LIB) && $(MAKE) fclean)
+				@$(ECHO) $(RED) '> Executable removed' $(E0M)
 
 re		:		fclean all
 
 ftlib	:
-				@(cd $(SUB_MAKE) && $(MAKE))
+				@(cd $(LIB) && $(MAKE))
 
 .PHONY	:		all clean re
 
