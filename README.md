@@ -1,2 +1,2 @@
-# ft_nm
- ELF nm: list symbols from object files
+# ft_readelf
+ft_readelf: Display all the information about the contents of ELF format files
