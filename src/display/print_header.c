@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 23:08:24 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/15 18:45:10 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/06/15 22:06:27 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	print_64header(Elf64_Ehdr elf_64, char **type)
 	ft_printf("%d (bytes)\n", elf_64.e_shentsize);
 	ft_printf("  Number of section headers:         %d\n", elf_64.e_shnum);
 	ft_printf("  Section header string table index: %d\n", elf_64.e_shstrndx);
+	ft_printf("", elf_64.e_version);
 }
 
 static void	print_32header(Elf32_Ehdr elf_32, char **type)
@@ -62,25 +63,39 @@ static void	print_32header(Elf32_Ehdr elf_32, char **type)
 	ft_printf("%d (bytes)\n", elf_32.e_shentsize);
 	ft_printf("  Number of section headers:         %d\n", elf_32.e_shnum);
 	ft_printf("  Section header string table index: %d\n", elf_32.e_shstrndx);
+	ft_printf("", elf_32.e_version);
 }
+
+/*
+**	1 little endian
+**	2 big endian
+*/
 
 static void	print_magic(t_elf elf, char **arch, char **endian, char **osabi)
 {
 	int		i;
+	char	*colors[16] = {GREEN, GREEN, GREEN, GREEN, CEL, COLOR_E0M,
+						  YELLOW, LIGHT_GRAY, CYAN, GRAY, GRAY, GRAY, GRAY,
+						  GRAY, GRAY, GRAY};
 
 	ft_printf("ELF Header:\n");
-	ft_printf("  Magic:   "GREEN);
+	ft_printf(BOLD"  Magic:   ");
 	i = 0;
 	while (i < EI_NIDENT)
+	{
+		ft_printf(colors[i]);
 		ft_printf("%.2x ", elf.identifier[i++]);
-	ft_printf(E0M"\n  Class:                             ");
+	}
+	ft_printf("\n  %sClass:                             %s", BOLD""CEL, E0M);
 	ft_printf("%s\n", arch[elf.identifier[EI_CLASS]]);
-	ft_printf("  Data:                              ");
+	ft_printf(BOLD"  Data:                              "E0M);
 	ft_printf("2's complement, %s endian\n", endian[elf.identifier[EI_DATA]]);
-	ft_printf("  Version:                           1 (current)\n");
-	ft_printf("  OS/ABI:                            ");
+	ft_printf(BOLD""YELLOW"  Version:                           "E0M);
+	ft_printf("1 (current)\n");
+	ft_printf(BOLD""LIGHT_GRAY"  OS/ABI:                            "E0M);
 	ft_printf("%s\n", osabi[elf.identifier[EI_OSABI]]);
-	ft_printf("  ABI Version:                       %d\n", elf.identifier[8]);
+	ft_printf(BOLD""CYAN"  ABI Version:                       "E0M);
+	ft_printf("%d\n", elf.identifier[EI_ABIVERSION]);
 }
 
 /*
