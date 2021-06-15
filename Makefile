@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/20 17:00:07 by ciglesia          #+#    #+#              #
-#    Updated: 2021/06/15 15:08:45 by ciglesia         ###   ########.fr        #
+#    Updated: 2021/06/16 01:25:19 by ciglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -32,7 +32,7 @@ DIRSRC		=	./src/
 DIRDIS		=	$(DIRSRC)/display/
 
 SRC			=	main.c
-DISPLAY		=	print_header.c
+DISPLAY		=	print_elf_header.c print_program_header.c
 
 SRCS		=	$(SRC) $(DISPLAY)
 

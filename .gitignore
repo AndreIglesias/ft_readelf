@@ -1,5 +1,5 @@
 ft_readelf
-*.~
+*~
 # Prerequisites
 *.d
 

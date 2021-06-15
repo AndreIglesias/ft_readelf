@@ -6,15 +6,22 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 22:32:16 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/15 20:26:18 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/06/16 01:24:35 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "readelf.h"
 
-static void	print_elf(t_elf *elf)
+static int	print_elf(t_elf *elf, char *obj)
 {
+	if (elf_header(elf, obj) == 0)
+		return (0);
 	print_header(*elf);
+	if (elf_pheader(elf, obj) == 0)
+		return (0);
+	ft_printf("\n");
+	print_pheader(*elf);
+	return (1);
 }
 
 static void	ft_readelf(char *obj, int nparams)
@@ -24,23 +31,16 @@ static void	ft_readelf(char *obj, int nparams)
 
 	elf.obj = obj;
 	err = elf_ident(&elf, obj);
-	if (!err)
-		ft_printf_fd(2, "ft_readelf: '%s': file format not recognized\n", obj);
-	else if (err < 0)
-		ft_printf_fd(2, "ft_readelf: '%s': No such file\n", obj);
-	else
+	if (err > 0)
 	{
 		elf.class = elf.identifier[EI_CLASS];
 		if (nparams)
 			ft_printf(CEL"%s:\n"E0M, elf.obj);
-		err = elf_header(&elf, obj);
-		if (!err)
-			ft_printf_fd(2, "ft_readelf: '%s': file format not recognized\n", obj);
-		else if (err < 0)
-			ft_printf_fd(2, "ft_readelf: '%s': No such file\n", obj);
-		else
-			print_elf(&elf);
+		if (print_elf(&elf, obj))
+			return ;
 	}
+	if (!err)
+		ft_printf_fd(2, "ft_readelf: '%s': file format not recognized\n", obj);
 }
 
 /*
