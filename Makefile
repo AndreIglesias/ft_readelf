@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/20 17:00:07 by ciglesia          #+#    #+#              #
-#    Updated: 2021/06/16 01:25:19 by ciglesia         ###   ########.fr        #
+#    Updated: 2021/06/27 13:52:39 by ciglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -113,6 +113,6 @@ re		:		fclean all
 ftlib	:
 				@(cd $(LIB) && $(MAKE))
 
-.PHONY	:		all clean re
+.PHONY	:		all clean fclean re ftlib
 
 -include $(DEPS)
