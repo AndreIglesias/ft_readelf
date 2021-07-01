@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 00:34:49 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/16 00:34:49 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/06/27 19:08:26 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,14 @@ static void	print_64header(Elf64_Ehdr elf_64, char **type)
 		ft_printf("%s\n", type[elf_64.e_type]);
 	else
 		ft_printf("Processor Specific: (%.2x)\n", elf_64.e_type);
+	elf_64.e_version = elf_64.e_version > 0;
 	ft_printf("  Machine:                           %#x\n", elf_64.e_machine);
 	ft_printf("  Version:                           %#x\n", elf_64.e_version);
-	ft_printf("  Entry point address:               %#x\n", elf_64.e_entry);
+	ft_printf("  Entry point address:               %#lx\n", elf_64.e_entry);
 	ft_printf("  Start of program headers:          ");
-	ft_printf("%d (bytes into file)\n", elf_64.e_phoff);
+	ft_printf("%lu (bytes into file)\n", elf_64.e_phoff);
 	ft_printf("  Start of section headers:          ");
-	ft_printf("%d (bytes into file)\n", elf_64.e_shoff);
+	ft_printf("%lu (bytes into file)\n", elf_64.e_shoff);
 	ft_printf("  Flags:                             0x%x\n", elf_64.e_flags);
 	ft_printf("  Size of this header:               ");
 	ft_printf("%d (bytes)\n", elf_64.e_ehsize);
@@ -36,7 +37,6 @@ static void	print_64header(Elf64_Ehdr elf_64, char **type)
 	ft_printf("%d (bytes)\n", elf_64.e_shentsize);
 	ft_printf("  Number of section headers:         %d\n", elf_64.e_shnum);
 	ft_printf("  Section header string table index: %d\n", elf_64.e_shstrndx);
-	ft_printf("", elf_64.e_version);
 }
 
 static void	print_32header(Elf32_Ehdr elf_32, char **type)
@@ -46,6 +46,7 @@ static void	print_32header(Elf32_Ehdr elf_32, char **type)
 		ft_printf("%s\n", type[elf_32.e_type]);
 	else
 		ft_printf("Processor Specific: (%.2x)\n", elf_32.e_type);
+	elf_32.e_version = elf_32.e_version > 0;
 	ft_printf("  Machine:                           %#x\n", elf_32.e_machine);
 	ft_printf("  Version:                           %#x\n", elf_32.e_version);
 	ft_printf("  Entry point address:               %#x\n", elf_32.e_entry);
@@ -63,7 +64,6 @@ static void	print_32header(Elf32_Ehdr elf_32, char **type)
 	ft_printf("%d (bytes)\n", elf_32.e_shentsize);
 	ft_printf("  Number of section headers:         %d\n", elf_32.e_shnum);
 	ft_printf("  Section header string table index: %d\n", elf_32.e_shstrndx);
-	ft_printf("", elf_32.e_version);
 }
 
 /*
@@ -83,7 +83,7 @@ static void	print_magic(t_elf elf, char **arch, char **endian, char **osabi)
 	i = 0;
 	while (i < EI_NIDENT)
 	{
-		ft_printf(colors[i]);
+		ft_printf("%s", colors[i]);
 		ft_printf("%.2x ", elf.identifier[i++]);
 	}
 	ft_printf("\n  %sClass:                             %s", BOLD""CEL, E0M);

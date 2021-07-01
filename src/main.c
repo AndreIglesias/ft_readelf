@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 22:32:16 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/16 01:24:35 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/06/27 19:17:09 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	main(int ac, char **av)
 {
 	int		i;
 
+	printf("%d\n", _Generic(1L, float :1, double :2, long double :3,
+			default :0));
 	if (ac > 1)
 	{
 		i = 1;

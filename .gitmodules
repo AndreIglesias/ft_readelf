@@ -1,9 +1,0 @@
-[submodule "lib/libstring"]
-	path = lib/libstring
-	url = https://github.com/AndreIglesias/libstring
-[submodule "lib/libstd"]
-	path = lib/libstd
-	url = https://github.com/AndreIglesias/libstd
-[submodule "lib/libELF"]
-	path = lib/libELF
-	url = https://github.com/AndreIglesias/libELF

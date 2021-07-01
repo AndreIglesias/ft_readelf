@@ -6,7 +6,7 @@
 #    By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/20 17:00:07 by ciglesia          #+#    #+#              #
-#    Updated: 2021/06/27 13:52:39 by ciglesia         ###   ########.fr        #
+#    Updated: 2021/07/01 18:11:50 by ciglesia         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -18,13 +18,15 @@ INC			=	./include/
 
 # Lib
 LIB			=	./lib/
+LIBINC		=	$(LIB)/include/
+
 LIBSTD		=	$(LIB)/libstd/
 LIBSTR		=	$(LIB)/libstring/
 LIBELF		=	$(LIB)/libELF/
 
 INC_LIB		=	-L$(LIBELF) -lelf -L$(LIBSTD) -lstd -L$(LIBSTR) -lstring
 
-INCLUDE		=	-O3 -I $(INC)
+INCLUDE		=	-O3 -I $(INC) -I $(LIBINC)
 
 #***************** SRC ********************#
 
@@ -53,6 +55,10 @@ CFLAGS		=	-Wall -Wextra -Werror -ansi -pedantic -g
 	endif
 else
 CFLAGS		=	-Wall -Wextra -Werror
+endif
+
+ifndef VERBOSE
+.SILENT:
 endif
 
 CC			=	/usr/bin/clang
@@ -93,20 +99,23 @@ $(NAME)	:		ftlib $(OBJS)
 				@$(ECHO) "                                                    d8'"
 				@$(ECHO) "                                                   d8'"
 				@$(ECHO) $(E0M)
-				@$(ECHO) $(BOLD) $(GREEN)'> Compiled' $(E0M)
+				@$(ECHO) $(BOLD)$(GREEN)'> ft_readelf Compiled'$(E0M)
 
 clean	:
 				@($(RM) $(OBJS))
 				@($(RM) $(DEPS))
 				@(cd $(LIB) && $(MAKE) clean)
-				@$(ECHO) $(RED) '> Directory cleaned' $(E0M)
+				@$(ECHO) $(BOLD)$(RED)'> ft_readelf directory   cleaned'$(E0M)
 
 all		:		$(NAME)
 
-fclean	:		clean
-				@$(RM) $(NAME)
+fclean	:
+				@($(RM) $(NAME))
+				@($(RM) $(OBJS))
+				@($(RM) $(DEPS))
 				@(cd $(LIB) && $(MAKE) fclean)
-				@$(ECHO) $(RED) '> Executable removed' $(E0M)
+				@$(ECHO) $(BOLD)$(RED)'> ft_readelf directory   cleaned'$(E0M)
+				@$(ECHO) $(BOLD)$(RED)'> Executable             removed'$(E0M)
 
 re		:		fclean all
 
