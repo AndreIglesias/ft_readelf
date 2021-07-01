@@ -6,7 +6,7 @@
 /*   By: ciglesia <ciglesia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 22:32:16 by ciglesia          #+#    #+#             */
-/*   Updated: 2021/06/27 19:17:09 by ciglesia         ###   ########.fr       */
+/*   Updated: 2021/07/01 18:15:26 by ciglesia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	ft_readelf(char *obj, int nparams)
 /*
 **	readelf -a --all options
 */
-
+#include <stdio.h>
 int	main(int ac, char **av)
 {
 	int		i;
